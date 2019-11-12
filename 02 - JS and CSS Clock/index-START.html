@@ -62,6 +62,21 @@
       background: black;
       position: absolute;
       top: 50%;
+      /* transform-origin moves the point where I actually transform from
+      which is important in rotations of a clock hand because I want it to rotate
+      about the center axis of the clock and not the center of the hand itself */
+      transform-origin: 100%;
+      /* apparently t-o takes any type of value, but % seems the most applicable
+      in all imaginable cases right now */
+      /* transform: rotate all hands 90 deg to get all hands to start at the 12 
+      position */
+      transform: rotate(90deg);
+      /* transition time is time it takes to make any transition */
+      transition: 0.25s;
+      /* cubic bezier function changes how the transform happens, allows "ticking"
+      as I understand it, how i have it set up is that the transitiong will over
+      transition for a temporary time and then go back to the original full transition */
+      transition-timing-function: cubic-bezier(0.07, 1.99, 0.57, 0.52);
     }
 
   </style>
