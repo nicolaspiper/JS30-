@@ -72,11 +72,15 @@
       position */
       transform: rotate(90deg);
       /* transition time is time it takes to make any transition */
-      transition: 0.25s;
+      transition: all 0.05s;
       /* cubic bezier function changes how the transform happens, allows "ticking"
       as I understand it, how i have it set up is that the transitiong will over
       transition for a temporary time and then go back to the original full transition */
       transition-timing-function: cubic-bezier(0.07, 1.99, 0.57, 0.52);
+      /* the options of transition are actually transition-property, transition-duration,
+      and transition-timing-function - the ones which I know of - so I can delete the
+      previous line and append its property to the end of transition and it would work
+      the same */
     }
 
   </style>
@@ -85,19 +89,35 @@
     const secondHand = document.querySelector('.second-hand');
     const minuteHand = document.querySelector('.min-hand');
     const hourHand = document.querySelector('.hour-hand');
-
     function setDate(){
+
       const now = new Date();
       const seconds = now.getSeconds();
       const secondsDegrees = ((seconds/60)*360) + 90;
+      if (secondsDegrees === 90) { // important to not base it off of the seconds count as it is not continuous
+        secondHand.style.transition = 'none'
+      } else {
+        secondHand.style.transition = 'inherit'
+        // inherit or a blank space works here
+      }
       secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
 
       const minutes = now.getMinutes();
       const minuteDegrees = ((minutes/60)*360) + 90;
+      if (minuteDegrees === 90) {
+        minuteHand.style.transition = 'none'
+      } else {
+        minuteHand.style.transition = ''
+      }
       minuteHand.style.transform = `rotate(${minuteDegrees}deg)`;
       
       const hours = now.getHours();
-      const hourDegrees = ((hours/24)*360)-90;
+      const hourDegrees = ((hours/12)*360)+90;
+      if (hourDegrees === 90) {
+        hourHand.style.transition = 'none'
+      } else {
+        hourHand.style.transition = ''
+      }
       hourHand.style.transform = `rotate(${hourDegrees}deg)`;
 
     }
